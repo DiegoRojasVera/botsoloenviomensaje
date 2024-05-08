@@ -17,8 +17,6 @@ const flowBienvenida = addKeyword(['kiki']).addAction(async (ctx, { flowDynamic 
 En breve serás atendido por un asesor.`]);
 });
 
-
-
 // Lógica principal
 const main = async () => {
     const provider = createProvider(BaileysProvider);
@@ -37,8 +35,7 @@ const main = async () => {
             res.end('Error al enviar mensaje');
         }
     }))
-    
-    
+
     // Llamar a la función de consulta y envío de mensajes cada minuto
     setInterval(async () => {
         try {
@@ -48,14 +45,21 @@ const main = async () => {
             console.error('Error en la lógica principal:', error.message);
         }
     }, 3600000); // 60 minutos
-//}, 5000); // 5 segundos
-
 
     // Inicializar el bot con todos los flujos, incluida la respuesta predeterminada y los comandos disponibles
     const bot = await createBot({
         flow: createFlow([flowBienvenida]),
         database: new MemoryDB(),
         provider
+    });
+
+    // Controlador de eventos para el evento SIGINT
+    process.on('SIGINT', async () => {
+        console.log('Deteniendo el bot y el servidor HTTP...');
+        await bot.stop();
+        provider.http.server.close();
+        console.log('Bot y servidor HTTP detenidos correctamente');
+        process.exit(0);
     });
 };
 
