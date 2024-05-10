@@ -1,8 +1,8 @@
 import BotWhatsapp from '@bot-whatsapp/bot';
 
 /**
- * Un flujo conversacion que responder a las palabras claves "hola", "buenas", ...
+ * Un flujo de conversación que responde a las palabras clave "hola" y "buenas".
+ * Invita al cliente a preguntar o responder algo específico.
  */
 export default BotWhatsapp.addKeyword(['hola', 'buenas'])
-    .addAnswer('Un gusto tenerte de nuevo ¿Como puedo ayudarte el día de hoy 😀?')
-
+    .addAnswer('¡Hola de nuevo! ¿Tienes alguna pregunta o deseas saber más sobre nuestros servicios? Estoy aquí para ayudarte. 😀')
